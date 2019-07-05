@@ -69,6 +69,21 @@ export KUBECONFIG=~/Desktop/k8s-1-14-3-do-0-sfo2-1562260891246-kubeconfig.yaml
 export KUBECONFIG=~/.kube/config:~/Desktop/k8s-1-14-3-do-0-sfo2-1562260891246-kubeconfig.yaml
 ```
 
+Now you can see the contexts
+
+```bash
+kubectl config get-contexts
+
+# now minikube is the current
+CURRENT   NAME                                         CLUSTER                                      AUTHINFO                                           NAMESPACE
+          do-sfo2-k8s-1-14-3-do-0-sfo2-1562260891246   do-sfo2-k8s-1-14-3-do-0-sfo2-1562260891246   do-sfo2-k8s-1-14-3-do-0-sfo2-1562260891246-admin
+          docker-for-desktop                           docker-for-desktop-cluster                   docker-for-desktop
+*         minikube                                     minikube                                     minikube
+
+# change the contexts
+kubectl config use-context do-sfo2-k8s-1-14-3-do-0-sfo2-1562260891246
+```
+
 ### Deploy to cluster
 ```bash
 kubectl apply -f nginx/deployment.yaml
