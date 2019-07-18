@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: kuard-volumes
+  name: kuard-volumes
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kuard-volumes
+  template:
+    metadata:
+      labels:
+        app: kuard-volumes
+    spec:
+      containers:
+      - image: gcr.io/kuar-demo/kuard-amd64:blue
+        name: kuard-amd64
+        ports:
+          - containerPort: 8080
+        volumeMounts:
+          - name: "kuard-data"
+            mountPath: "/data"
+      volumes:
+        - name: "kuard-data"
+          hostPath:
+            path: "/var/lib/kuard"
+
+      
