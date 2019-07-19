@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: kuard-health-checks
+  name: kuard-health-checks
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: kuard-health-checks
+  template:
+    metadata:
+      labels:
+        app: kuard-health-checks
+    spec:
+      containers:
+      - image: gcr.io/kuar-demo/kuard-amd64:blue
+        livenessProbe:
+          httpGet:
+            path: /healthy
+            port: 8080
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          failureThreshold: 3
+        name: kuard-amd64
+        ports:
+          - containerPort: 8080
+            name: http
+            protocol: TCP
