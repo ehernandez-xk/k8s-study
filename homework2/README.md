@@ -1,8 +1,6 @@
-#
-
 ## Health Checks
 
-output a sample yaml
+Output a sample yaml
 
 ```bash
 kubectl create deployment kuard-health-checks --image gcr.io/kuar-demo/kuard-amd64:blue --dry-run -o yaml > health-checks/kuard-livenessProbe.yaml
@@ -24,7 +22,7 @@ To test it using the UI
 kubectl port-forward <a-pod-name> 8080
 ```
 
-### LivenessProbe
+### RedinessProbe
 
 ```bash
 kubectl apply -f kuard-redinessProbe.yaml
@@ -33,6 +31,11 @@ If pod is READY is assigned to the endpoints in the service. And it is consider 
 
 ```bash
 kubectl port-forward <a-pod-name> 8080
+```
+
+```bash
+# See endpoints
+kubectl get endpoints
 ```
 
 ## Resources Request
@@ -66,14 +69,13 @@ kubectl get pods -w
 Open a new terminal to see the `OOMKilled` then forward the pod to increase the memory allocation. The deployment will create a new container.
 
 
-
 ## Volumes
 
-deployment.spec.template.spec.volumes
+`deployment.spec.template.spec.volumes`
 
 Volumes definitions that may be mounted by the containers, the name of the volumen and the host path where this whill be mounted. If a pod is deleted or container restarts the data in the filesystem is deleted.
 
-pod.spec.containers.volumeMounts
+`pod.spec.containers.volumeMounts`
 
 The definition inside the containers.volumeMounts is where you mount a volume defined in the spec, using the name and the path to mount inside the container
 
@@ -81,7 +83,7 @@ The definition inside the containers.volumeMounts is where you mount a volume de
 kubectl apply -f volume-mounts/kuard-volumes.yaml
 ```
 
-to test it
+To test it
 
 ```bash
 minikube ssh
@@ -92,7 +94,7 @@ kubectl port-forward kuard-volumes-865d648846-z5wzn 8080 # see the filesystem un
 
 ## Labels
 
-some useful commands
+Some useful commands
 
 ```bash
 kubectl run alpaca-prod \
@@ -132,7 +134,6 @@ key notin (value1, value2)  key is not one of value1 or value2
 
 ## Services
 
-
 DNS resolution A record for a service
 
 ```bash
@@ -156,10 +157,19 @@ FQDN where you want
 kubectl get endpoints alpaca-prod --watch
 ```
 
-### Tunneling ssh to a NodePort
-See port assigned to the service
+### Access to the service
+
+Tunneling ssh to a NodePort:
+If the service is ClusterIP you can edit using `kubectl edit service <service-name>`. See port assigned to the service
 
 ```bash
 ssh <node> -L 8080:localhost:32711
 ```
-For minikube you can see the ip that minikube is using with `minikube status` and then add the port assigned
+For minikube you can access directly using the IP that minikube is using `minikube status` and then add the port assigned
+
+## Manual Service Discovery
+
+```bash
+kubectl get pods -o wide --show-labels
+kubectl get pods -o wide --selector=app=alpaca,env=prod
+```
