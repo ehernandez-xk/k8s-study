@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: kube-daemonset
+spec:
+  selector:
+    matchLabels:
+      k8s-app: kube-daemonset
+  template:
+    metadata:
+      labels:
+        k8s-app: kube-daemonset
+    spec:
+      containers:
+      - image: gcr.io/kuar-demo/kuard-amd64:blue
+        name: kuard
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+  
