@@ -5,7 +5,7 @@
 kubectl get replicaset kuard-health-checks-6b969559fc -o yaml > kuard-replicaset.yaml
 ```
 
-Clean up the yaml and apply the replica set
+Clean up the yaml and apply the replicaset
 
 ```bash
 kubectl apply -f kuard-replicaset.yaml
@@ -17,7 +17,7 @@ See that the replicaset does not add new labels to the pod
 kubectl get pods --show-labels
 ```
 
-Replicaset add to each pod an Object to identifiy that this belong to a replicaset `pod.metadata.ownerReferences`
+Replicaset adds to each pod an Object to identifiy that this belong to a replicaset `pod.metadata.ownerReferences`
 
 ### Replicate
 
@@ -33,7 +33,7 @@ Declarative
 
 ## horizontal pod autoscaling (HPA)
 
-It is a control loop that automatically scales the number of pods in a replication controller (deployment or replicaset). By default check period is 15 seconds. It can be changed with `--horizontal-pod-autoscaler-sync-period` flag on the controll manager startup
+It is a control loop that automatically scales the number of pods in a replication controller (deployment or replicaset). By default check period is 15 seconds. It can be changed with `--horizontal-pod-autoscaler-sync-period` flag on the control manager startup
 
 Queries the resource utilization against the metrics specified in each HPA definition
 
@@ -49,9 +49,9 @@ git clone https://github.com/kubernetes-incubator/metrics-server.git
 kubectl create -f deploy/1.8+/
 ```
 
-For minikube I need to do the following to disable tls
+For minikube I needed to disable TLS. Update the deployment
 
-```bash
+```yaml
 kubectl edit deploy -n kube-system metrics-server
 ## add two flags and the args array in the metrics-server container
     args:
@@ -89,7 +89,7 @@ kubectl apply -f daemonset/kube-daemonset.yaml
 
 ### Limiting DaemonSets to Specific Nodes
 
-Deamonset by default creates a pod on each node in the cluster, but this can be chanded by limiting a subset of nodes where you want your pods
+Daemonset by default creates a pod on each node in the cluster, but this can be changed by limiting a subset of nodes where you want your pods
 
 Add some labels to the node
 ```bash
@@ -104,7 +104,7 @@ kubectl get node --selector ssd=true
 Add the follwoing nodeSelector map in the spec
 
 `daemonset.spec.template.spec.nodeSelector`
-```bash
+```yaml
 spec:
     nodeSelector:
       ssd: "true"
@@ -115,7 +115,7 @@ spec:
 kubectl apply -f daemonset/kube-daemonset-selector.yaml 
 ```
 
-Remove the node's label to see if the daemonset remove the pod from that node
+Remove the node's label to see if the Daemonset removes the pod from that node
 
 ```bash
 kubectl label nodes minikube --overwrite ssd=false
