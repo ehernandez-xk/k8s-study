@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: my-deploy
+  name: my-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-deploy
+  template:
+    metadata:
+      labels:
+        app: my-deploy
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        env:
+        - name: MY-CUSTOM-ENV
+          valueFrom:
+            configMapKeyRef:
+              name: kuard-config
+              key: extra-param
+        volumeMounts:
+        - name: config-file
+          mountPath: /usr/config # path directory to mount my-file
+        command:
+        - "/bin/sh"
+        - "-c"
+        args: 
+        - "echo $(MY-CUSTOM-ENV) && nginx -g 'daemon off;'"
+      volumes:
+      - name: config-file # volume name
+        configMap:
+          name: kuard-config # configMap name
+          items:
+            - key: app.properties
+              path: my-file

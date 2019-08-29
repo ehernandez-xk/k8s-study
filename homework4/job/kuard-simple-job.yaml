@@ -1,0 +1,14 @@
+# this job does not do anything
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: my-job
+spec:
+  template:
+    metadata:
+    spec:
+      containers:
+      - image: busybox
+        command: ["echo", "hola"]
+        name: my-job
+      restartPolicy: Never
