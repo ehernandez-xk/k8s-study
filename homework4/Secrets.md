@@ -21,3 +21,11 @@ kubectl create secret generic kuard-tls \
   --from-file=kuard.crt --from-file=kuard.key \
   --dry-run -o yaml | kubectl replace -f -
 ```
+
+```bash
+kubectl edit configmap my-config
+```
+Note:
+you could also do this with a secret, but you’d be stuck managing the base64 encoding of values on your own
+
+Once a ConfigMap or secret is updated using the API, it’ll be automatically pushed to all volumes that use that ConfigMap or secret

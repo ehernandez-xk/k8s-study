@@ -1,5 +1,6 @@
 
 
 - Jobs [here](Jobs.md)
-- CofigMaps [here](CofigMaps.md)
+- ConfigMaps [here](CofigMaps.md)
 - Secrets [here](Secrets.md)
+- Additional stuff [here](Additional.md)
