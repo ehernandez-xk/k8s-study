@@ -24,4 +24,3 @@ kubectl proxy
 ```
 
 Then visit http://localhost:8001/api/v1/namespaces/default/services/ghost/proxy/ in your web browser to begin interacting with Ghost.
-
