@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: my-dep
+  name: my-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-dep
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: my-dep
+    spec:
+      serviceAccountName: sa-test
+      containers:
+      - image: nginx:1.13
+        name: nginx
+        ports:
+        - containerPort: 80

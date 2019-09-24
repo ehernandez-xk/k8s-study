@@ -1,0 +1,46 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: r-lockdown
+rules:
+- apiGroups: [""]
+  resources: [""]
+  verbs: [""]
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: sa-lockdown
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: rb-lockdown
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: r-lockdown
+subjects:
+- kind: ServiceAccount
+  name: sa-lockdown
+  namespace: default
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      serviceAccountName: sa-lockdown
+      containers:
+      - name: nginx
+        image: nginx:1.13
+        ports:
+        - containerPort: 80
