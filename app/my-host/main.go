@@ -13,13 +13,13 @@ const (
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 	name, err := os.Hostname()
 	if err != nil {
-		fmt.Fprint(w, "Unable to get the hostname")
+		fmt.Fprintln(w, "Unable to get the hostname")
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 	hostname := fmt.Sprintf("Hostname: %v", name)
 	fmt.Println(hostname)
-	fmt.Fprint(w, hostname)
+	fmt.Fprintln(w, hostname)
 	w.WriteHeader(http.StatusOK)
 }
 
