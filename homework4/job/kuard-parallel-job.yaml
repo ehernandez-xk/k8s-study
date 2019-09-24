@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: my-job
+  labels:
+    chapter: jobs
+spec:
+  parallelism: 5
+  completions: 10
+  template:
+    metadata:
+      labels:
+        chapter: jobs
+    spec:
+      containers:
+      - command:
+        - sleep
+        - "5"
+        image: alpine
+        name: my-job
+        imagePullPolicy: Always
+      restartPolicy: OnFailure
