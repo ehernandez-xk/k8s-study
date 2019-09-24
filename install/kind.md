@@ -2,6 +2,8 @@
 
 https://kind.sigs.k8s.io
 
+Is a tool for running local Kubernetes clusters using Docker container as “nodes”.
+
 ## Usage
 
 The `create` by default creates 1 node but you can pass a configuration to specify the number of pods
