@@ -1,6 +1,6 @@
 # Headless service
 
-Comparison **Headless** and **ClusterIP** services
+Comparison between **Headless** and **ClusterIP** services
 
 For headless Services, a cluster IP is not allocated, also is useful when proxying is not required and when you don't need load-balancing.
 Only consists in set to value None the clusterIP (`service.spec.clusterIP`)
