@@ -8,15 +8,15 @@ The key thing is that the ConfigMap is combined with the Pod right before it is 
 `--from-file`
 ```bash
 # the key is the file name
-kubectl create configmap kuard-config --dry-run -o yaml --from-file configMaps/app.properties > configMaps/from-file-configmap.yaml
+kubectl create configmap kuard-config --dry-run -o yaml --from-file app.properties > from-file-configmap.yaml
 # change the key
-kubectl create configmap kuard-config --dry-run -o yaml --from-file=myfile=configMaps/app.properties > configMaps/from-file-with-key-configmap.yaml
+kubectl create configmap kuard-config --dry-run -o yaml --from-file=myfile=app.properties > from-file-with-key-configmap.yaml
 ```
 
 ### From a literal
 `--from-literal`
 ```bash
-kubectl create configmap kuard-config --dry-run -o yaml --from-file configMaps/app.properties --from-literal=extra-param=extra-value > configMaps/from-file-literal-configmap.yaml
+kubectl create configmap kuard-config --dry-run -o yaml --from-file app.properties --from-literal=extra-param=extra-value > from-file-literal-configmap.yaml
 # use multiple --from-literal flag if many
 ```
 ### From a environment file
@@ -37,12 +37,12 @@ The following deployment will map the three cases in the pods
 
 ```bash
 # create the configMap
-kubectl apply -f configMaps/from-file-literal-configmap.yaml
+kubectl apply -f from-file-literal-configmap.yaml
 ```
 Create the basic deploy yaml
 
 ```bash
-kubectl create deployment my-deploy --image=nginx  --dry-run -o yaml > configMaps/my-deploy.yaml
+kubectl create deployment my-deploy --image=nginx  --dry-run -o yaml > my-deploy.yaml
 ```
 
 ```bash
