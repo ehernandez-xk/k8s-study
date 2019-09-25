@@ -14,6 +14,7 @@ kind create cluster --config kind-cluster-3-nodes.yaml --name=mycluster
 
 There are more options you can configure here
 ```yaml
+# kind-cluster-3-nodes.yaml
 # three node (two workers) cluster config
 kind: Cluster
 apiVersion: kind.sigs.k8s.io/v1alpha3
