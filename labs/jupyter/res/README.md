@@ -5,7 +5,7 @@ kubectl create namespace jupyter --dry-run -o yaml > namespace.yaml
 kubectl apply -f namespace.yaml
 ```
 
-### change namespace (optional)
+### Change namespace (optional)
 Help us to change the current namespace
 ```bash
 kubectl config set-context --current --namespace=jupyter
@@ -40,12 +40,13 @@ kubectl -n jupyter port-forward jupyter-5cc4fbd5b-wdhg4 8888
 To see if the services was correctly configured
 ```bash
 minikube service list
-kubectl config set-context --current --namespace=default
+minikube service jupyter
 ```
 
 ### Ping the service
-from default
+from default namespace
 ```bash
+kubectl config set-context --current --namespace=default
 kubectl run --rm -it --generator=run-pod/v1 --image eddygt/apphostname:1.0 mytest sh
 host jupyter.jupyter
 jupyter.jupyter.svc.cluster.local
