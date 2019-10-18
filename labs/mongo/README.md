@@ -2,7 +2,7 @@
 
 Create a StatefulSet-based MongoDB cluster.
 
-Steps:
+### Steps:
 1. Create a new namespace `mongo`
 2. Create a Statefulset for MongoDB to have the pods mongo-0, mongo-1 and mongo-2
     - 3 replicas
@@ -31,7 +31,7 @@ kubectl apply -f service.yaml
 kubectl apply -f mongo.yaml
 ```
 
-init.sh file
+### init.sh file
 ```bash
 #!/bin/bash
 # Need to wait for the readiness health check to pass so that the
