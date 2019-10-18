@@ -1,5 +1,5 @@
 
-- Additional stuff [here](Additional.md)
-- Mongo [here](mongo/mongo.md)
+- Jupiter [here](jupyter/README.md)
+- Mongo [here](mongo/README.md)
 - Parse [here](parse/parse.md)
 - Ghost [here](ghost/ghost.md)
