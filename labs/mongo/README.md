@@ -22,12 +22,19 @@ Create a StatefulSet-based MongoDB cluster.
     - after the creation review the DNS entries that were created for this services (should be 4)
 5. Create a configMap to holds de following initializing script and add it using the init.sh key
     - name `mongo-init`
+6. you sould be able to ping the mongo DNS entries
 
-Now that you have all in place you can create the cluster with:
 ```bash
-kubectl apply -f ns.yaml
-kubectl apply -f configMap.yaml
-kubectl apply -f service.yaml
+# ping
+kubectl -n mongo run -it --rm --image busybox busybox ping mongo-1.mongo
+# ping FQDN
+kubectl run -it --rm --image busybox busybox ping mongo-0⁠.mongo⁠.mongo.svc⁠.cluster​.local
+```
+**Final scripts**
+```bash
+kubectl apply -f mongo-namespace.yaml
+kubectl apply -f mongo-config-map.yaml
+kubectl apply -f mongo-service.yaml
 kubectl apply -f mongo.yaml
 ```
 
@@ -38,7 +45,8 @@ kubectl apply -f mongo.yaml
 # mongo names resolve. This is kind of wonky.
 until ping -c 1 ${HOSTNAME}.mongo; do
     echo "waiting for DNS (${HOSTNAME}.mongo)..."
-sleep 2 done
+    sleep 2
+done
 until /usr/bin/mongo --eval 'printjson(db.serverStatus())'; do
     echo "connecting to local mongo..."
     sleep 2
@@ -71,13 +79,3 @@ while true; do
     sleep 3600
 done
 ```
-
-```bash
-kubectl apply -f mongo-config-map.yaml
-kubectl apply -f mongo-service.yaml
-kubectl apply -f mongo.yaml
-# ping
-kubectl run -it --rm --image busybox busybox ping mongo-1.mongo
-```
-
-The DNS resolution for this statefulSet mongo is `mongo-0⁠.mongo⁠.default⁠.svc⁠.cluster​.local`
