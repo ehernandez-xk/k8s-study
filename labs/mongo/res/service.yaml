@@ -6,8 +6,8 @@ metadata:
   name: mongo
 spec:
   ports:
-  - protocol: TCP
-    port: 27017
+  - port: 27017
+    name: peer
   selector:
     app: mongo
   clusterIP: None

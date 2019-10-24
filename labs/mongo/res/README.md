@@ -1,10 +1,12 @@
 # Mongo Cluster
 
+## Steps on how I create the yaml
+
 ### Namespace
 kubectl create ns mongo -o yaml --dry-run > namespace.yaml
 
 ### ConfigMap
-kubectl create configmap mongo --from-file=init.sh --dry-run -o yaml > configMap.yaml
+kubectl create configmap mongo-init --from-file=init.sh --dry-run -o yaml > configMap.yaml
 
 ### Statefulset
 Create the StatefulSet I copy paste the basic yaml from the docs
@@ -18,10 +20,12 @@ so I create it manually
 kubectl create service clusterip mongo --clusterip="None" --tcp=27017 --dry-run -o yaml > service.yaml
 
 ### Run
+```bash
 kubectl apply -f namespace.yaml
 kubectl -n mongo apply -f configMap.yaml
 kubectl -n mongo apply -f service.yaml
 kubectl -n mongo apply -f mongo.yaml
+```
 
 ### test
 ```bash
