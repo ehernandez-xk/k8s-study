@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: parse
+  name: parse
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: parse
+  template:
+    metadata:
+      labels:
+        app: parse
+    spec:
+      containers:
+      - image: eddygt/parse-server
+        name: parse-server
+        command: ["node", "./bin/parse-server","--appId", "$(PARSE_SERVER_APP_ID)", "--masterKey", "$(PARSE_SERVER_MASTER_KEY)", "--databaseURI", "$(PARSE_SERVER_DATABASE_URI)"]
+        ports:
+        - containerPort: 1337
+        env:
+        - name: PARSE_SERVER_DATABASE_URI
+          value: "mongodb://mongo-0.mongo:27017,mongo-1.mongo:27017,mongo-2.mongo:27017/dev?replicaSet=rs0"
+        - name: PARSE_SERVER_APP_ID
+          value: my-app-id
+        - name: PARSE_SERVER_MASTER_KEY
+          value: my-master-key

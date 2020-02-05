@@ -31,13 +31,11 @@ docker push ${DOCKER_USER}/parse-server
 ```yaml
 env:
 - name: PARSE_SERVER_DATABASE_URI
-    value: "mongodb://mongo-0.mongo:27017,\
-    mongo-1.mongo:27017,mongo-2.mongo\
-    :27017/dev?replicaSet=rs0"
+  value: "mongodb://mongo-0.mongo:27017,mongo-1.mongo:27017,mongo-2.mongo:27017/dev?replicaSet=rs0"
 - name: PARSE_SERVER_APP_ID
-    value: my-app-id
+  value: my-app-id
 - name: PARSE_SERVER_MASTER_KEY
-    value: my-master-key
+  value: my-master-key
 ```
 
 2. Create the service for the deployment 
